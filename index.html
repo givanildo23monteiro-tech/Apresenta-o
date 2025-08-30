@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Capim Maradum - Apresentação</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: #333;
+            height: 100vh;
+            overflow: hidden;
+        }
+        
+        .slideshow-container {
+            width: 100%;
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .slide {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            opacity: 0;
+            transition: opacity 0.8s ease;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            background: white;
+            background-image: url('estrutura-foliar.jpg'); /* Imagem de fundo para todos os slides */
+            background-size: cover;
+            background-position: center;
+            background-blend-mode: overlay;
+            background-color: rgba(255, 255, 255, 0.9); /* Fundo branco semitransparente para melhor legibilidade */
+        }
+        
+        .slide.active {
+            opacity: 1;
+            z-index: 10;
+        }
+        
+        .slide-header {
+            text-align: center;
+            margin-bottom: 10px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #27ae60;
+            background-color: rgba(255, 255, 255, 0.8); /* Fundo semitransparente para melhor contraste */
+            border-radius: 8px;
+            padding: 10px;
+        }
+        
+        .slide-title {
+            font-size: 1.6rem;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+        
+        .presenter-info {
+            display: inline-flex;
+            align-items: center;
+            background: #27ae60;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-weight: 500;
+            font-size: 0.85rem;
+        }
+        
+        .presenter-label {
+            margin-right: 5px;
+            opacity: 0.9;
+        }
+        
+        .slide-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            flex: 1;
+            overflow: hidden;
+            height: calc(100% - 70px);
+        }
+        
+        .content-left, .content-right {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            overflow: hidden;
+            height: 100%;
+        }
+        
+        .content-block {
+            background: rgba(248, 249, 250, 0.85); /* Fundo semitransparente */
+            padding: 12px;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+            overflow: hidden;
+            flex-shrink: 1;
+            min-height: 0;
+            backdrop-filter: blur(5px); /* Efeito de vidro fosco */
+        }
+        
+        .content-block h3 {
+            color: #2c3e50;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 1rem;
+        }
+        
+        .content-block h3 i {
+            color: #27ae60;
+            font-size: 0.9rem;
+        }
+        
+        .bullet-list {
+            list-style: none;
+            padding: 0;
+            font-size: 0.85rem;
+        }
+        
+        .bullet-list li {
+            padding: 5px 0;
+            padding-left: 18px;
+            position: relative;
+            line-height: 1.3;
+        }
+        
+        .bullet-list li::before {
+            content: '▶';
+            position: absolute;
+            left: 0;
+            color: #27ae60;
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin: 10px 0;
+        }
+        
+        .stat-item {
+            text-align: center;
+            padding: 10px;
+            background: white;
+            border-radius: 6px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+        }
+        
+        .stat-value {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #27ae60;
+        }
+        
+        .stat-label {
+            font-size: 0.75rem;
+            color: #6c757d;
+        }
+        
+        .image-container {
+            height: 150px;
+            border-radius: 6px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 8px 0;
+            overflow: hidden;
+            background: #f0f0f0;
+            position: relative;
+            border: 2px solid #27ae60;
+        }
+        
+        .image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .image-placeholder {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+            color: white;
+            font-weight: bold;
+            font-size: 0.85rem;
+            text-align: center;
+            padding: 8px;
+        }
+        
+        .slide-controls {
+            position: absolute;
+            bottom: 10px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            z-index: 20;
+        }
+        
+        .control-btn {
+            background: rgba(52, 152, 219, 0.7);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+        }
+        
+        .control-btn:hover {
+            background: rgba(41, 128, 185, 0.9);
+            transform: scale(1.1);
+        }
+        
+        .slide-indicator {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            font-weight: 600;
+            color: white;
+            background: rgba(44, 62, 80, 0.7);
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.85rem;
+        }
+        
+        .slide-navigation {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            display: flex;
+            gap: 6px;
+            z-index: 20;
+        }
+        
+        .nav-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #ccc;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-dot.active {
+            background: #e74c3c;
+            transform: scale(1.2);
+        }
+        
+        .team-info {
+            position: absolute;
+            bottom: 12px;
+            right: 12px;
+            background: rgba(231, 76, 60, 0.9);
+            color: white;
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            z-index: 20;
+            max-width: 200px;
+            text-align: center;
+            line-height: 1.2;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin: 10px 0;
+        }
+        
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px;
+            background: white;
+            border-radius: 6px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+            font-size: 0.85rem;
+        }
+        
+        .feature-icon {
+            font-size: 1.1rem;
+            color: #27ae60;
+        }
+        
+        .scientific-name {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #27ae60;
+            font-style: italic;
+            text-align: center;
+            margin: 10px 0;
+            padding: 10px;
+            background: linear-gradient(135deg, #e8f5e8, #d4edda);
+            border-radius: 6px;
+            border: 1px solid #27ae60;
+        }
+        
+        .type-badge {
+            padding: 8px 15px;
+            border-radius: 15px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            text-align: center;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+        }
+        
+        .type-badge.tropical {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+            color: white;
+        }
+        
+        .type-badge.c4 {
+            background: linear-gradient(135deg, #4ecdc4, #44a08d);
+            color: white;
+        }
+        
+        .animal-types {
+            display: flex;
+            gap: 12px;
+            margin-top: 10px;
+        }
+        
+        .animal-item {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 10px;
+            background: #e8f4fd;
+            border-radius: 6px;
+            border: 1px solid #3498db;
+            font-weight: 600;
+            color: #2980b9;
+            font-size: 0.85rem;
+        }
+        
+        .animal-item i {
+            font-size: 1.1rem;
+        }
+        
+        .utilization-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .util-item {
+            text-align: center;
+            padding: 12px 6px;
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            font-size: 0.8rem;
+        }
+        
+        .util-item:hover {
+            background: #ffc107;
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .util-icon {
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+        }
+        
+        .util-text {
+            font-weight: 600;
+        }
+        
+        /* Ajustes específicos para o layout de gerenciamento */
+        .management-row {
+            display: grid;
+            grid-template-columns: 2fr 1fr 2fr;
+            gap: 10px;
+            padding: 10px 12px;
+            align-items: center;
+            border-bottom: 1px solid #e9ecef;
+            font-size: 0.8rem;
+        }
+        
+        .management-row.header {
+            background: #2c3e50;
+            color: white;
+            padding: 10px 12px;
+        }
+        
+        .mgmt-height.highlight {
+            background: #27ae60;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            text-align: center;
+            font-weight: 700;
+            font-size: 0.85rem;
+        }
+        
+        /* Ajustes para cards de características */
+        .characteristics-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+        
+        .char-card {
+            text-align: center;
+            padding: 15px 8px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
+            font-size: 0.8rem;
+        }
+        
+        .char-icon {
+            font-size: 1.7rem;
+            margin-bottom: 6px;
+        }
+        
+        .char-title {
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 4px;
+            font-size: 0.85rem;
+        }
+        
+        .char-desc {
+            color: #6c757d;
+            font-size: 0.75rem;
+        }
+        
+        /* Ajustes de responsividade */
+        @media (max-width: 900px) {
+            .slide-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .slide-title {
+                font-size: 1.4rem;
+            }
+            
+            .characteristics-grid,
+            .utilization-grid,
+            .feature-grid,
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .slide {
+                padding: 10px;
+            }
+            
+            .slide-title {
+                font-size: 1.2rem;
+            }
+            
+            .characteristics-grid,
+            .utilization-grid,
+            .feature-grid,
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .control-btn {
+                width: 35px;
+                height: 35px;
+                font-size: 0.9rem;
+            }
+            
+            .management-row {
+                grid-template-columns: 1fr;
+                gap: 6px;
+                text-align: center;
+            }
+            
+            .animal-types {
+                flex-direction: column;
+            }
+            
+            .team-info {
+                font-size: 0.75rem;
+                max-width: 180px;
+                bottom: 50px;
+            }
+            
+            .slide-controls {
+                bottom: 8px;
+            }
+        }
+
+        /* Ajustes específicos para o slide 5 */
+        .conclusion-block {
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+            line-height: 1.4;
+            text-align: justify;
+        }
+        
+        /* Garantir que todos os elementos caibam */
+        .scroll-container {
+            overflow-y: auto;
+            max-height: 100%;
+            padding-right: 5px;
+        }
+        
+        .scroll-container::-webkit-scrollbar {
+            width: 5px;
+        }
+        
+        .scroll-container::-webkit-scrollbar-thumb {
+            background: #ccc;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="slideshow-container">
+        <!-- Slide 1: Introdução -->
+        <div class="slide active" id="slide-1">
+            <div class="slide-header">
+                <h1 class="slide-title">Capim Maradum</h1>
+                <div class="presenter-info">
+                    <span class="presenter-label">Apresentador:</span>
+                    <span class="presenter-name">Renan</span>
+                </div>
+            </div>
+            
+            <div class="slide-content">
+                <div class="content-left">
+                    <div class="content-block">
+                        <h3><i class="fas fa-dna"></i> Nome Científico</h3>
+                        <div class="scientific-name">Brachiaria brizantha</div>
+                        <div style="text-align: center; font-size: 0.85rem;">
+                            <strong>Nomes comuns:</strong> capim maradum, brizantão, braquiarão
+                        </div>
+                    </div>
+                    
+                    <div class="content-block">
+                        <h3><i class="fas fa-globe-africa"></i> Origem e História</h3>
+                        <ul class="bullet-list">
+                            <li>Originária da <strong>África Tropical</strong> (Zimbábue, Burundi)</li>
+                            <li>Liberada pela <strong>EMBRAPA</strong> em 1983/1984</li>
+                            <li>Forrageira mais cultivada no Brasil</li>
+                            <li>Adaptação excepcional ao clima tropical</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="content-right">
+                    <div class="image-container">
+                        <img src="estrutura-foliar.jpg" alt="Estrutura foliar do capim maradum">
+                        <div class="image-placeholder" style="display: none;">[Imagem: Estrutura foliar característica]</div>
+                    </div>
+                    
+                    <div class="content-block">
+                        <h3><i class="fas fa-clipboard-list"></i> Características Principais</h3>
+                        <ul class="bullet-list">
+                            <li>Planta perene de crescimento cespitoso</li>
+                            <li>Altura variando entre 1,0 - 2,0 m</li>
+                            <li>Sistema radicular profundo e fasciculado</li>
+                            <li>Folhas lanceoladas com coloração verde-intensa</li>
+                            <li>Excelente rebrota após o pastejo ou corte</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 2: Crescimento -->
+        <div class="slide" id="slide-2">
+            <div class="slide-header">
+                <h1 class="slide-title">Hábito de Crescimento e Produtividade</h1>
+                <div class="presenter-info">
+                    <span class="presenter-label">Apresentador:</span>
+                    <span class="presenter-name">Junior</span>
+                </div>
+            </div>
+            
+            <div class="slide-content">
+                <div class="content-left">
+                    <div class="content-block">
+                        <h3><i class="fas fa-chart-line"></i> Características de Crescimento</h3>
+                        <div class="feature-grid">
+                            <div class="feature-item">
+                                <div class="feature-icon">🌱</div>
+                                <div class="feature-text">
+                                    <strong>Perene</strong><br>
+                                    Crescimento cespitoso
+                                </div>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-icon">📏</div>
+                                <div class="feature-text">
+                                    <strong>1,0 - 2,0 m</strong><br>
+                                    Altura máxima
+                                </div>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-icon">⚡</div>
+                                <div class="feature-text">
+                                    <strong>Rápido</strong><br>
+                                    Estabelecimento
+                                </div>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-icon">🔄</div>
+                                <div class="feature-text">
+                                    <strong>Excelente</strong><br>
+                                    Rebrota
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="content-block">
+                        <h3><i class="fas fa-chart-bar"></i> Produtividade</h3>
+                        <div style="text-align: center; padding: 15px; background: linear-gradient(135deg, #27ae60, #2ecc71); color: white; border-radius: 10px;">
+                            <div style="font-size: 2rem; font-weight: 900;">18-30</div>
+                            <div style="font-size: 0.9rem;">t/ha/ano de matéria seca</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="content-right">
+                    <div class="image-container">
+                        <img src="crescimento-touceiras.jpg" alt="Crescimento em touceiras do capim maradum">
+                        <div class="image-placeholder" style="display: none;">[Imagem: Crescimento em touceiras]</div>
+                    </div>
+                    
+                    <div class="content-block">
+                        <h3><i class="fas fa-map-marked-alt"></i> Regiões Indicadas</h3>
+                        <ul class="bullet-list">
+                            <li><strong>Todo o Brasil</strong> - Norte ao Sul</li>
+                            <li><strong>Sudeste e Centro-Oeste</strong> - Principais regiões</li>
+                            <li><strong>Pré-Amazônia</strong> - Boa adaptação</li>
+                            <li><strong>Solos</strong> - Média a alta fertilidade</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 3: Alimentação -->
+        <div class="slide" id="slide-3">
+            <div class="slide-header">
+                <h1 class="slide-title">Uso na Alimentação Animal</h1>
+                <div class="presenter-info">
+                    <span class="presenter-label">Apresentador:</span>
+                    <span class="presenter-name">Givanildo</span>
+                </div>
+            </div>
+            
+            <div class="slide-content">
+                <div class="content-left">
+                    <div class="content-block">
+                        <h3><i class="fas fa-cow"></i> Espécies Animais</h3>
+                        <div class="animal-types">
+                            <div class="animal-item">
+                                <i class="fas fa-cow"></i>
+                                <span>Bovinos de Corte</span>
+                            </div>
+                            <div class="animal-item">
+                                <i class="fas fa-glass-whiskey"></i>
+                                <span>Bovinos Leiteiros</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="content-block">
+                        <h3><i class="fas fa-utensils"></i> Formas de Utilização</h3>
+                        <div class="utilization-grid">
+                            <div class="util-item">
+                                <div class="util-icon">🌾</div>
+                                <div class="util-text">Pastejo Direto</div>
+                            </div>
+                            <div class="util-item">
+                                <div class="util-icon">🏭</div>
+                                <div class="util-text">Silagem</div>
+                            </div>
+                            <div class="util-item">
+                                <div class="util-icon">📦</div>
+                                <div class="util-text">Fenação</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="content-right">
+                    <div class="image-container">
+                        <img src="bovinos-pastagem.jpg" alt="Bovinos em pastagem de capim maradum">
+                        <div class="image-placeholder" style="display: none;">[Imagem: Bovinos em pastagem]</div>
+                    </div>
+                    
+                    <div class="content-block">
+                        <h3><i class="fas fa-thermometer-half"></i> Tipo de Forrageira</h3>
+                        <div class="forrage-type" style="display: flex; gap: 10px; margin-bottom: 12px; flex-wrap: wrap;">
+                            <div class="type-badge tropical">Forrageira Tropical</div>
+                            <div class="type-badge c4">Planta C4</div>
+                        </div>
+                        <div class="c4-benefits">
+                            <h4 style="font-size: 0.9rem; margin-bottom: 6px;">Vantagens do Metabolismo C4:</h4>
+                            <ul class="bullet-list">
+                                <li>Alta eficiência fotossintética</li>
+                                <li>Ótima performance em altas temperaturas</li>
+                                <li>Aproveitamento máximo da luminosidade</li>
+                                <li>Resistência à seca moderada</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 4: Manejo -->
+        <div class="slide" id="slide-4">
+            <div class="slide-header">
+                <h1 class="slide-title">Ciclo de Vida e Manejo</h1>
+                <div class="presenter-info">
+                    <span class="presenter-label">Apresentador:</span>
+                    <span class="presenter-name">João</span>
+                </div>
+            </div>
+            
+            <div class="slide-content">
+                <div class="content-left">
+                    <div class="content-block">
+                        <h3><i class="fas fa-calendar-alt"></i> Ciclo de Vida</h3>
+                        <div class="lifecycle-badge" style="display: flex; align-items: center; gap: 12px; padding: 15px; background: linear-gradient(135deg, #9b59b6, #8e44ad); color: white; border-radius: 10px; text-align: center;">
+                            <div class="lifecycle-icon" style="font-size: 2rem;">♾️</div>
+                            <div class="lifecycle-text" style="font-size: 1rem; line-height: 1.2;">
+                                <strong>PERENE</strong><br>
+                                Mais de 2 anos de vida útil
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="content-block scroll-container">
+                        <h3><i class="fas fa-ruler-vertical"></i> Alturas de Manejo</h3>
+                        <div class="management-table">
+                            <div class="management-row header">
+                                <div>Tipo de Manejo</div>
+                                <div>Altura</div>
+                                <div>Objetivo</div>
+                            </div>
+                            <div class="management-row">
+                                <div class="mgmt-type" style="display: flex; align-items: center; gap: 5px;">
+                                    <i class="fas fa-sign-in-alt"></i>
+                                    Entrada do Gado
+                                </div>
+                                <div class="mgmt-height highlight">25-30 cm</div>
+                                <div class="mgmt-purpose">Máxima qualidade</div>
+                            </div>
+                            <div class="management-row">
+                                <div class="mgmt-type" style="display: flex; align-items: center; gap: 5px;">
+                                    <i class="fas fa-sign-out-alt"></i>
+                                    Saída do Gado
+                                </div>
+                                <div class="mgmt-height highlight">15-20 cm</div>
+                                <div class="mgmt-purpose">Preservar rebrota</div>
+                            </div>
+                            <div class="management-row">
+                                <div class="mgmt-type" style="display: flex; align-items: center; gap: 5px;">
+                                    <i class="fas fa-cut"></i>
+                                    Corte para Feno
+                                </div>
+                                <div class="mgmt-height highlight">90 cm</div>
+                                <div class="mgmt-purpose">Volume e qualidade</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="content-right">
+                    <div class="image-container">
+                        <img src="manejo-pastagem.jpg" alt="Manejo de pastagem de capim maradum">
+                        <div class="image-placeholder" style="display: none;">[Imagem: Manejo de pastagem]</div>
+                    </div>
+                    
+                    <div class="content-block scroll-container">
+                        <h3><i class="fas fa-tasks"></i> Práticas de Manejo</h3>
+                        <ul class="bullet-list">
+                            <li>Pastejo rotacionado com período de descanso de 28-35 dias</li>
+                            <li>Adubação nitrogenada após cada ciclo de pastejo</li>
+                            <li>Controle de plantas invasoras no estabelecimento</li>
+                            <li>Irrigação suplementar em períodos de estiagem</li>
+                            <li>Monitoramento da altura de entrada e saída dos animais</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 5: Características - AJUSTADO PARA CABER TUDO -->
+        <div class="slide" id="slide-5">
+            <div class="slide-header">
+                <h1 class="slide-title">Principais Características</h1>
+                <div class="presenter-info">
+                    <span class="presenter-label">Apresentador:</span>
+                    <span class="presenter-name">Kaio</span>
+                </div>
+            </div>
+            
+            <div class="slide-content">
+                <div class="content-left">
+                    <div class="content-block scroll-container">
+                        <h3><i class="fas fa-star"></i> Características Destacadas</h3>
+                        <div class="characteristics-grid">
+                            <div class="char-card">
+                                <div class="char-icon">🛡️</div>
+                                <div class="char-title">Resistência</div>
+                                <div class="char-desc">Cigarrinhas-das-pastagens</div>
+                            </div>
+                            <div class="char-card">
+                                <div class="char-icon">📈</div>
+                                <div class="char-title">Produção</div>
+                                <div class="char-desc">Alta produtividade</div>
+                            </div>
+                            <div class="char-card">
+                                <div class="char-icon">🔄</div>
+                                <div class="char-title">Rebrota</div>
+                                <div class="char-desc">Recuperação rápida</div>
+                            </div>
+                            <div class="char-card">
+                                <div class="char-icon">🌱</div>
+                                <div class="char-title">Solo</div>
+                                <div class="char-desc">Melhora estrutura</div>
+                            </div>
+                            <div class="char-card">
+                                <div class="char-icon">🍃</div>
+                                <div class="char-title">Morfologia</div>
+                                <div class="char-desc">Folhas lanceoladas</div>
+                            </div>
+                            <div class="char-card">
+                                <div class="char-icon">🌡️</div>
+                                <div class="char-title">Adaptação</div>
+                                <div class="char-desc">Clima tropical</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="content-right">
+                    <div class="image-container">
+                        <img src="sementes-maradum.jpg" alt="Sementes de capim maradum">
+                        <div class="image-placeholder" style="display: none;">[Imagem: Sementes de capim maradum]</div>
+                    </div>
+                    
+                    <div class="content-block">
+                        <h3><i class="fas fa-check-circle"></i> Conclusão</h3>
+                        <div class="conclusion-block">
+                            O capim Maradum (<em>Brachiaria brizantha</em>) é uma forrageira de 
+                            <strong>fundamental importância</strong> para a pecuária tropical brasileira, 
+                            destacando-se por sua alta produtividade, adaptabilidade e valor nutricional.
+                        </div>
+                    </div>
+                    
+                    <div class="content-block">
+                        <h3><i class="fas fa-users"></i> Equipe</h3>
+                        <ul class="bullet-list">
+                            <li>Renan - Introdução</li>
+                            <li>Junior - Crescimento</li>
+                            <li>Givanildo - Alimentação</li>
+                            <li>João - Manejo</li>
+                            <li>Kaio - Características</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Controles de Navegação -->
+        <div class="slide-controls">
+            <button class="control-btn" id="prev-slide">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <div class="slide-indicator">
+                <span id="current-slide">1</span> / <span id="total-slides">5</span>
+            </div>
+            <button class="control-btn" id="next-slide">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+        
+        <!-- Navegação por pontos -->
+        <div class="slide-navigation">
+            <div class="nav-dot active" data-slide="1"></div>
+            <div class="nav-dot" data-slide="2"></div>
+            <div class="nav-dot" data-slide="3"></div>
+            <div class="nav-dot" data-slide="4"></div>
+            <div class="nav-dot" data-slide="5"></div>
+        </div>
+        
+        <!-- Informações da equipe (AGORA COM TODOS OS 5 NOMES) -->
+        <div class="team-info">
+            Equipe: Renan, Junior, Givanildo, João, Kaio
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const slides = document.querySelectorAll('.slide');
+            const navDots = document.querySelectorAll('.nav-dot');
+            const prevBtn = document.getElementById('prev-slide');
+            const nextBtn = document.getElementById('next-slide');
+            const currentSlideEl = document.getElementById('current-slide');
+            const totalSlidesEl = document.getElementById('total-slides');
+            
+            let currentSlide = 0;
+            const totalSlides = slides.length;
+            
+            totalSlidesEl.textContent = totalSlides;
+            
+            function showSlide(index) {
+                slides.forEach(slide => slide.classList.remove('active'));
+                navDots.forEach(dot => dot.classList.remove('active'));
+                
+                slides[index].classList.add('active');
+                navDots[index].classList.add('active');
+                
+                currentSlide = index;
+                currentSlideEl.textContent = index + 1;
+                
+                // Ajustar transparência dos botões conforme a posição
+                if (index === 0) {
+                    prevBtn.style.opacity = "0.5";
+                } else {
+                    prevBtn.style.opacity = "0.7";
+                }
+                
+                if (index === totalSlides - 1) {
+                    nextBtn.style.opacity = "0.5";
+                } else {
+                    nextBtn.style.opacity = "0.7";
+                }
+            }
+            
+            prevBtn.addEventListener('click', () => {
+                if (currentSlide > 0) {
+                    showSlide(currentSlide - 1);
+                }
+            });
+            
+            nextBtn.addEventListener('click', () => {
+                if (currentSlide < totalSlides - 1) {
+                    showSlide(currentSlide + 1);
+                }
+            });
+            
+            navDots.forEach((dot, index) => {
+                dot.addEventListener('click', () => {
+                    showSlide(index);
+                });
+            });
+            
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowLeft' && currentSlide > 0) {
+                    showSlide(currentSlide - 1);
+                } else if (e.key === 'ArrowRight' && currentSlide < totalSlides - 1) {
+                    showSlide(currentSlide + 1);
+                }
+            });
+            
+            // Initialize
+            showSlide(0);
+        });
+    </script>
+</body>
+</html>
