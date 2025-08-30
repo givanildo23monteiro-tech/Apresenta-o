@@ -3,191 +3,254 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Capim Maradum - Apresentação</title>
+    <title>Capim Maradum - Apresentação Premium</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --primary: #1a472a;
+            --secondary: #2e8b57;
+            --accent: #f1c40f;
+            --dark: #0f1a1f;
+            --light: #f8f9fa;
+            --transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Montserrat', sans-serif;
         }
         
         body {
-            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-            color: #333;
-            height: 100vh;
-            overflow: hidden;
+            background: linear-gradient(135deg, var(--dark) 0%, #1e3c72 100%);
+            color: var(--light);
+            min-height: 100vh;
+            overflow: auto;
+            font-weight: 400;
         }
         
-        .slideshow-container {
+        .presentation-container {
             width: 100%;
-            height: 100vh;
+            min-height: 100vh;
+            perspective: 1200px;
             position: relative;
-            overflow: hidden;
+            overflow: auto;
+            padding: 20px 0;
         }
         
         .slide {
-            width: 100%;
-            height: 100%;
+            width: 94%;
+            min-height: 85vh;
             position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotateY(10deg) scale(0.92);
             opacity: 0;
-            transition: opacity 0.8s ease;
-            padding: 15px;
+            transition: var(--transition);
+            padding: 25px;
             display: flex;
             flex-direction: column;
-            background: white;
-            background-image: url('estrutura-foliar.jpg'); /* Imagem de fundo para todos os slides */
-            background-size: cover;
-            background-position: center;
-            background-blend-mode: overlay;
-            background-color: rgba(255, 255, 255, 0.9); /* Fundo branco semitransparente para melhor legibilidade */
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            overflow: auto;
+            z-index: 1;
+        }
+        
+        .slide::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgdmlld0JveD0iMCAwIDYwIDYwIj48ZyBmaWxsPSJub25lIiBzdHJva2U9InJnYmEoMjU1LDI1NSwyNTUsMC4wMykiIHN0cm9rZS13aWR0aD0iMiI+PGNpcmNsZSBjeD0iMzAiIGN5PSIzMCIgcj0iMTUiLz48L2c+PC9zdmc+');
+            z-index: -1;
         }
         
         .slide.active {
             opacity: 1;
+            transform: translate(-50%, -50%) rotateY(0deg) scale(1);
             z-index: 10;
         }
         
         .slide-header {
             text-align: center;
-            margin-bottom: 10px;
-            padding-bottom: 8px;
-            border-bottom: 2px solid #27ae60;
-            background-color: rgba(255, 255, 255, 0.8); /* Fundo semitransparente para melhor contraste */
-            border-radius: 8px;
-            padding: 10px;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--accent);
+            position: relative;
+        }
+        
+        .slide-header::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 2px;
         }
         
         .slide-title {
-            font-size: 1.6rem;
-            color: #2c3e50;
-            margin-bottom: 5px;
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--light);
+            margin-bottom: 8px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            letter-spacing: 1px;
         }
         
         .presenter-info {
             display: inline-flex;
             align-items: center;
-            background: #27ae60;
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
             color: white;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-weight: 500;
-            font-size: 0.85rem;
+            padding: 6px 16px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            box-shadow: 0 4px 15px rgba(46, 139, 87, 0.3);
         }
         
         .presenter-label {
-            margin-right: 5px;
+            margin-right: 6px;
             opacity: 0.9;
         }
         
         .slide-content {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 15px;
+            gap: 20px;
             flex: 1;
-            overflow: hidden;
-            height: calc(100% - 70px);
+            overflow: auto;
+            min-height: 60vh;
         }
         
         .content-left, .content-right {
             display: flex;
             flex-direction: column;
-            gap: 12px;
-            overflow: hidden;
-            height: 100%;
+            gap: 18px;
+            overflow: auto;
         }
         
         .content-block {
-            background: rgba(248, 249, 250, 0.85); /* Fundo semitransparente */
-            padding: 12px;
-            border-radius: 8px;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
-            overflow: hidden;
-            flex-shrink: 1;
-            min-height: 0;
-            backdrop-filter: blur(5px); /* Efeito de vidro fosco */
+            background: rgba(15, 26, 31, 0.7);
+            padding: 18px;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            overflow: auto;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: var(--transition);
+            position: relative;
+        }
+        
+        .content-block::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--secondary), var(--accent));
+            border-radius: 12px 0 0 12px;
+        }
+        
+        .content-block:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3);
         }
         
         .content-block h3 {
-            color: #2c3e50;
-            margin-bottom: 8px;
+            color: var(--accent);
+            margin-bottom: 12px;
             display: flex;
             align-items: center;
-            gap: 6px;
-            font-size: 1rem;
+            gap: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
         }
         
         .content-block h3 i {
-            color: #27ae60;
-            font-size: 0.9rem;
+            color: var(--secondary);
+            font-size: 1.1rem;
+            width: 24px;
+            text-align: center;
         }
         
         .bullet-list {
             list-style: none;
             padding: 0;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
         }
         
         .bullet-list li {
-            padding: 5px 0;
-            padding-left: 18px;
+            padding: 6px 0;
+            padding-left: 22px;
             position: relative;
-            line-height: 1.3;
+            line-height: 1.4;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .bullet-list li:last-child {
+            border-bottom: none;
         }
         
         .bullet-list li::before {
-            content: '▶';
+            content: '➤';
             position: absolute;
             left: 0;
-            color: #27ae60;
-            font-size: 0.7rem;
+            color: var(--secondary);
+            font-size: 0.9rem;
             font-weight: bold;
+            top: 6px;
         }
         
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
-            margin: 10px 0;
-        }
-        
-        .stat-item {
+        .scientific-name {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--accent);
+            font-style: italic;
             text-align: center;
-            padding: 10px;
-            background: white;
-            border-radius: 6px;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
-        }
-        
-        .stat-value {
-            font-size: 1.3rem;
-            font-weight: bold;
-            color: #27ae60;
-        }
-        
-        .stat-label {
-            font-size: 0.75rem;
-            color: #6c757d;
+            margin: 12px 0;
+            padding: 15px;
+            background: linear-gradient(135deg, rgba(26, 71, 42, 0.3), rgba(46, 139, 87, 0.3));
+            border-radius: 10px;
+            border: 1px solid rgba(241, 196, 15, 0.3);
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
         }
         
         .image-container {
-            height: 150px;
-            border-radius: 6px;
+            height: 200px;
+            border-radius: 10px;
             display: flex;
             justify-content: center;
             align-items: center;
-            margin: 8px 0;
+            margin: 10px 0;
             overflow: hidden;
-            background: #f0f0f0;
+            background: linear-gradient(135deg, var(--dark), #15252d);
             position: relative;
-            border: 2px solid #27ae60;
+            border: 2px solid var(--secondary);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
         
         .image-container img {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            transition: var(--transition);
+        }
+        
+        .image-container:hover img {
+            transform: scale(1.03);
         }
         
         .image-placeholder {
@@ -199,343 +262,390 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
             color: white;
             font-weight: bold;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             text-align: center;
-            padding: 8px;
+            padding: 15px;
         }
         
+        /* Elementos de destaque */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin: 12px 0;
+        }
+        
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px;
+            background: rgba(26, 71, 42, 0.3);
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
+            border: 1px solid rgba(46, 139, 87, 0.2);
+        }
+        
+        .feature-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+            background: rgba(26, 71, 42, 0.4);
+        }
+        
+        .feature-icon {
+            font-size: 1.5rem;
+            color: var(--accent);
+            width: 35px;
+            text-align: center;
+        }
+        
+        .feature-text {
+            font-size: 0.9rem;
+            line-height: 1.3;
+        }
+        
+        .feature-text strong {
+            color: var(--accent);
+            font-weight: 600;
+        }
+        
+        /* Controles de navegação premium */
         .slide-controls {
-            position: absolute;
-            bottom: 10px;
+            position: fixed;
+            bottom: 20px;
             left: 0;
             right: 0;
             display: flex;
             justify-content: center;
-            gap: 12px;
+            gap: 15px;
             z-index: 20;
         }
         
         .control-btn {
-            background: rgba(52, 152, 219, 0.7);
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
             color: white;
             border: none;
-            width: 40px;
-            height: 40px;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.3s ease;
-            font-size: 1rem;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+            transition: var(--transition);
+            font-size: 1.2rem;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .control-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            opacity: 0;
+            transition: var(--transition);
         }
         
         .control-btn:hover {
-            background: rgba(41, 128, 185, 0.9);
-            transform: scale(1.1);
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+        
+        .control-btn:hover::before {
+            opacity: 1;
+        }
+        
+        .control-btn i {
+            position: relative;
+            z-index: 1;
         }
         
         .slide-indicator {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 6px;
+            gap: 8px;
             font-weight: 600;
             color: white;
-            background: rgba(44, 62, 80, 0.7);
-            padding: 5px 10px;
-            border-radius: 15px;
-            font-size: 0.85rem;
+            background: rgba(15, 26, 31, 0.7);
+            padding: 8px 16px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
         
         .slide-navigation {
-            position: absolute;
-            top: 12px;
-            right: 12px;
+            position: fixed;
+            top: 20px;
+            right: 20px;
             display: flex;
-            gap: 6px;
+            gap: 10px;
             z-index: 20;
         }
         
         .nav-dot {
-            width: 8px;
-            height: 8px;
+            width: 12px;
+            height: 12px;
             border-radius: 50%;
-            background: #ccc;
+            background: rgba(255, 255, 255, 0.3);
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: var(--transition);
+            position: relative;
+        }
+        
+        .nav-dot::before {
+            content: '';
+            position: absolute;
+            top: -4px;
+            left: -4px;
+            right: -4px;
+            bottom: -4px;
+            border-radius: 50%;
+            border: 2px solid var(--accent);
+            opacity: 0;
+            transition: var(--transition);
         }
         
         .nav-dot.active {
-            background: #e74c3c;
+            background: var(--accent);
             transform: scale(1.2);
         }
         
+        .nav-dot.active::before {
+            opacity: 0.5;
+        }
+        
         .team-info {
-            position: absolute;
-            bottom: 12px;
-            right: 12px;
-            background: rgba(231, 76, 60, 0.9);
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, var(--primary), var(--dark));
             color: white;
-            padding: 6px 10px;
-            border-radius: 6px;
+            padding: 8px 16px;
+            border-radius: 30px;
             font-size: 0.8rem;
             z-index: 20;
-            max-width: 200px;
-            text-align: center;
-            line-height: 1.2;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
         
-        .feature-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
-            margin: 10px 0;
+        /* Animações de entrada para elementos */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
         
-        .feature-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 10px;
-            background: white;
-            border-radius: 6px;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
-            font-size: 0.85rem;
+        .slide.active .content-block {
+            animation: fadeInUp 0.8s forwards;
         }
         
-        .feature-icon {
-            font-size: 1.1rem;
-            color: #27ae60;
+        .slide.active .content-block:nth-child(1) { animation-delay: 0.2s; }
+        .slide.active .content-block:nth-child(2) { animation-delay: 0.4s; }
+        .slide.active .content-block:nth-child(3) { animation-delay: 0.6s; }
+        
+        /* Efeito de partículas de fundo */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
         }
         
-        .scientific-name {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: #27ae60;
-            font-style: italic;
-            text-align: center;
-            margin: 10px 0;
-            padding: 10px;
-            background: linear-gradient(135deg, #e8f5e8, #d4edda);
-            border-radius: 6px;
-            border: 1px solid #27ae60;
+        .particle {
+            position: absolute;
+            background: rgba(46, 139, 87, 0.3);
+            border-radius: 50%;
+            animation: float 15s infinite linear;
         }
         
-        .type-badge {
-            padding: 8px 15px;
-            border-radius: 15px;
-            font-weight: 700;
-            font-size: 0.85rem;
-            text-align: center;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-1000px) rotate(720deg);
+                opacity: 0;
+            }
         }
         
-        .type-badge.tropical {
-            background: linear-gradient(135deg, #ff6b6b, #ee5a52);
-            color: white;
-        }
-        
-        .type-badge.c4 {
-            background: linear-gradient(135deg, #4ecdc4, #44a08d);
-            color: white;
-        }
-        
-        .animal-types {
-            display: flex;
-            gap: 12px;
-            margin-top: 10px;
-        }
-        
-        .animal-item {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            padding: 10px;
-            background: #e8f4fd;
-            border-radius: 6px;
-            border: 1px solid #3498db;
-            font-weight: 600;
-            color: #2980b9;
-            font-size: 0.85rem;
-        }
-        
-        .animal-item i {
-            font-size: 1.1rem;
-        }
-        
-        .utilization-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            margin-top: 10px;
-        }
-        
-        .util-item {
-            text-align: center;
-            padding: 12px 6px;
-            background: #fff3cd;
-            border: 1px solid #ffc107;
-            border-radius: 6px;
-            transition: all 0.3s ease;
-            font-size: 0.8rem;
-        }
-        
-        .util-item:hover {
-            background: #ffc107;
-            color: white;
-            transform: translateY(-2px);
-        }
-        
-        .util-icon {
-            font-size: 1.5rem;
-            margin-bottom: 5px;
-        }
-        
-        .util-text {
-            font-weight: 600;
-        }
-        
-        /* Ajustes específicos para o layout de gerenciamento */
-        .management-row {
-            display: grid;
-            grid-template-columns: 2fr 1fr 2fr;
-            gap: 10px;
-            padding: 10px 12px;
-            align-items: center;
-            border-bottom: 1px solid #e9ecef;
-            font-size: 0.8rem;
-        }
-        
-        .management-row.header {
-            background: #2c3e50;
-            color: white;
-            padding: 10px 12px;
-        }
-        
-        .mgmt-height.highlight {
-            background: #27ae60;
-            color: white;
-            padding: 5px 10px;
-            border-radius: 15px;
-            text-align: center;
-            font-weight: 700;
-            font-size: 0.85rem;
-        }
-        
-        /* Ajustes para cards de características */
-        .characteristics-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
-            margin-bottom: 15px;
-        }
-        
-        .char-card {
-            text-align: center;
-            padding: 15px 8px;
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
-            font-size: 0.8rem;
-        }
-        
-        .char-icon {
-            font-size: 1.7rem;
-            margin-bottom: 6px;
-        }
-        
-        .char-title {
-            font-weight: 700;
-            color: #2c3e50;
-            margin-bottom: 4px;
-            font-size: 0.85rem;
-        }
-        
-        .char-desc {
-            color: #6c757d;
-            font-size: 0.75rem;
+        /* Progress bar */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 5px;
+            background: linear-gradient(to right, var(--secondary), var(--accent));
+            width: 0%;
+            transition: width 0.3s ease;
+            z-index: 100;
         }
         
         /* Ajustes de responsividade */
-        @media (max-width: 900px) {
+        @media (max-width: 1200px) {
+            .slide-title {
+                font-size: 2rem;
+            }
+            
+            .scientific-name {
+                font-size: 1.4rem;
+            }
+        }
+        
+        @media (max-width: 992px) {
             .slide-content {
                 grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            .slide {
+                width: 96%;
+                min-height: 90vh;
+                padding: 20px;
+            }
+            
+            .slide-title {
+                font-size: 1.8rem;
+            }
+            
+            .content-block {
+                padding: 15px;
+            }
+            
+            .image-container {
+                height: 180px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .slide {
+                width: 98%;
+                padding: 15px;
+            }
+            
+            .slide-title {
+                font-size: 1.6rem;
+            }
+            
+            .content-block {
+                padding: 12px;
+            }
+            
+            .bullet-list {
+                font-size: 0.85rem;
+            }
+            
+            .bullet-list li {
+                padding: 5px 0;
+                padding-left: 20px;
+            }
+            
+            .feature-grid {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+            
+            .feature-item {
+                padding: 10px;
+            }
+            
+            .feature-icon {
+                font-size: 1.3rem;
+            }
+            
+            .feature-text {
+                font-size: 0.85rem;
+            }
+            
+            .image-container {
+                height: 160px;
+            }
+            
+            .control-btn {
+                width: 45px;
+                height: 45px;
+                font-size: 1.1rem;
+            }
+            
+            .slide-indicator {
+                font-size: 0.8rem;
+                padding: 6px 12px;
+            }
+            
+            .team-info {
+                font-size: 0.75rem;
+                padding: 6px 12px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .slide-header {
+                margin-bottom: 15px;
             }
             
             .slide-title {
                 font-size: 1.4rem;
             }
             
-            .characteristics-grid,
-            .utilization-grid,
-            .feature-grid,
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
+            .presenter-info {
+                font-size: 0.8rem;
+                padding: 5px 12px;
             }
-        }
-        
-        @media (max-width: 600px) {
-            .slide {
+            
+            .content-block h3 {
+                font-size: 1rem;
+            }
+            
+            .content-block h3 i {
+                font-size: 1rem;
+            }
+            
+            .scientific-name {
+                font-size: 1.2rem;
                 padding: 10px;
             }
             
-            .slide-title {
-                font-size: 1.2rem;
-            }
-            
-            .characteristics-grid,
-            .utilization-grid,
-            .feature-grid,
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .control-btn {
-                width: 35px;
-                height: 35px;
-                font-size: 0.9rem;
-            }
-            
-            .management-row {
-                grid-template-columns: 1fr;
-                gap: 6px;
-                text-align: center;
-            }
-            
-            .animal-types {
-                flex-direction: column;
-            }
-            
-            .team-info {
-                font-size: 0.75rem;
-                max-width: 180px;
-                bottom: 50px;
+            .image-container {
+                height: 140px;
             }
             
             .slide-controls {
-                bottom: 8px;
+                bottom: 15px;
+            }
+            
+            .slide-navigation {
+                top: 15px;
+                right: 15px;
+            }
+            
+            .team-info {
+                bottom: 70px;
+                right: 15px;
             }
         }
-
-        /* Ajustes específicos para o slide 5 */
-        .conclusion-block {
-            background: linear-gradient(135deg, #2ecc71, #27ae60);
-            color: white;
-            padding: 15px;
-            border-radius: 10px;
-            margin-bottom: 10px;
-            font-size: 0.9rem;
-            line-height: 1.4;
-            text-align: justify;
-        }
         
-        /* Garantir que todos os elementos caibam */
+        /* Ajustes para garantir que todo conteúdo seja visível */
         .scroll-container {
             overflow-y: auto;
             max-height: 100%;
@@ -547,13 +657,18 @@
         }
         
         .scroll-container::-webkit-scrollbar-thumb {
-            background: #ccc;
+            background: var(--secondary);
             border-radius: 10px;
         }
     </style>
 </head>
 <body>
-    <div class="slideshow-container">
+    <div class="progress-bar" id="progress-bar"></div>
+    
+    <div class="presentation-container">
+        <!-- Efeito de partículas de fundo -->
+        <div class="particles" id="particles"></div>
+        
         <!-- Slide 1: Introdução -->
         <div class="slide active" id="slide-1">
             <div class="slide-header">
@@ -569,12 +684,12 @@
                     <div class="content-block">
                         <h3><i class="fas fa-dna"></i> Nome Científico</h3>
                         <div class="scientific-name">Brachiaria brizantha</div>
-                        <div style="text-align: center; font-size: 0.85rem;">
+                        <div style="text-align: center; font-size: 0.9rem; margin-top: 10px;">
                             <strong>Nomes comuns:</strong> capim maradum, brizantão, braquiarão
                         </div>
                     </div>
                     
-                    <div class="content-block">
+                    <div class="content-block scroll-container">
                         <h3><i class="fas fa-globe-africa"></i> Origem e História</h3>
                         <ul class="bullet-list">
                             <li>Originária da <strong>África Tropical</strong> (Zimbábue, Burundi)</li>
@@ -588,10 +703,10 @@
                 <div class="content-right">
                     <div class="image-container">
                         <img src="estrutura-foliar.jpg" alt="Estrutura foliar do capim maradum">
-                        <div class="image-placeholder" style="display: none;">[Imagem: Estrutura foliar característica]</div>
+                        <div class="image-placeholder" style="display: none;">Estrutura Foliar</div>
                     </div>
                     
-                    <div class="content-block">
+                    <div class="content-block scroll-container">
                         <h3><i class="fas fa-clipboard-list"></i> Características Principais</h3>
                         <ul class="bullet-list">
                             <li>Planta perene de crescimento cespitoso</li>
@@ -617,7 +732,7 @@
             
             <div class="slide-content">
                 <div class="content-left">
-                    <div class="content-block">
+                    <div class="content-block scroll-container">
                         <h3><i class="fas fa-chart-line"></i> Características de Crescimento</h3>
                         <div class="feature-grid">
                             <div class="feature-item">
@@ -653,7 +768,7 @@
                     
                     <div class="content-block">
                         <h3><i class="fas fa-chart-bar"></i> Produtividade</h3>
-                        <div style="text-align: center; padding: 15px; background: linear-gradient(135deg, #27ae60, #2ecc71); color: white; border-radius: 10px;">
+                        <div style="text-align: center; padding: 15px; background: linear-gradient(135deg, var(--secondary), var(--primary)); color: white; border-radius: 12px; margin: 10px 0;">
                             <div style="font-size: 2rem; font-weight: 900;">18-30</div>
                             <div style="font-size: 0.9rem;">t/ha/ano de matéria seca</div>
                         </div>
@@ -663,13 +778,13 @@
                 <div class="content-right">
                     <div class="image-container">
                         <img src="crescimento-touceiras.jpg" alt="Crescimento em touceiras do capim maradum">
-                        <div class="image-placeholder" style="display: none;">[Imagem: Crescimento em touceiras]</div>
+                        <div class="image-placeholder" style="display: none;">Crescimento em Touceiras</div>
                     </div>
                     
-                    <div class="content-block">
+                    <div class="content-block scroll-container">
                         <h3><i class="fas fa-map-marked-alt"></i> Regiões Indicadas</h3>
                         <ul class="bullet-list">
-                            <li><strong>Todo o Brasil</strong> - Norte ao Sul</li>
+                            <li><strong>Todo o Brasil</strong> - Norte ao Sudeste</li>
                             <li><strong>Sudeste e Centro-Oeste</strong> - Principais regiões</li>
                             <li><strong>Pré-Amazônia</strong> - Boa adaptação</li>
                             <li><strong>Solos</strong> - Média a alta fertilidade</li>
@@ -693,32 +808,32 @@
                 <div class="content-left">
                     <div class="content-block">
                         <h3><i class="fas fa-cow"></i> Espécies Animais</h3>
-                        <div class="animal-types">
-                            <div class="animal-item">
-                                <i class="fas fa-cow"></i>
-                                <span>Bovinos de Corte</span>
+                        <div style="display: flex; gap: 12px; margin-top: 12px; flex-wrap: wrap;">
+                            <div style="flex: 1; min-width: 120px; text-align: center; padding: 12px; background: rgba(26, 71, 42, 0.3); border-radius: 10px; border: 1px solid rgba(46, 139, 87, 0.3);">
+                                <i class="fas fa-cow" style="font-size: 1.8rem; color: var(--accent); margin-bottom: 8px;"></i>
+                                <div style="font-weight: 600; font-size: 0.9rem;">Bovinos de Corte</div>
                             </div>
-                            <div class="animal-item">
-                                <i class="fas fa-glass-whiskey"></i>
-                                <span>Bovinos Leiteiros</span>
+                            <div style="flex: 1; min-width: 120px; text-align: center; padding: 12px; background: rgba(26, 71, 42, 0.3); border-radius: 10px; border: 1px solid rgba(46, 139, 87, 0.3);">
+                                <i class="fas fa-glass-whiskey" style="font-size: 1.8rem; color: var(--accent); margin-bottom: 8px;"></i>
+                                <div style="font-weight: 600; font-size: 0.9rem;">Bovinos Leiteiros</div>
                             </div>
                         </div>
                     </div>
                     
                     <div class="content-block">
                         <h3><i class="fas fa-utensils"></i> Formas de Utilização</h3>
-                        <div class="utilization-grid">
-                            <div class="util-item">
-                                <div class="util-icon">🌾</div>
-                                <div class="util-text">Pastejo Direto</div>
+                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 12px;">
+                            <div style="text-align: center; padding: 12px 8px; background: rgba(26, 71, 42, 0.3); border: 1px solid rgba(46, 139, 87, 0.3); border-radius: 8px;">
+                                <div style="font-size: 1.8rem; margin-bottom: 8px;">🌾</div>
+                                <div style="font-size: 0.85rem; font-weight: 600;">Pastejo Direto</div>
                             </div>
-                            <div class="util-item">
-                                <div class="util-icon">🏭</div>
-                                <div class="util-text">Silagem</div>
+                            <div style="text-align: center; padding: 12px 8px; background: rgba(26, 71, 42, 0.3); border: 1px solid rgba(46, 139, 87, 0.3); border-radius: 8px;">
+                                <div style="font-size: 1.8rem; margin-bottom: 8px;">🏭</div>
+                                <div style="font-size: 0.85rem; font-weight: 600;">Silagem</div>
                             </div>
-                            <div class="util-item">
-                                <div class="util-icon">📦</div>
-                                <div class="util-text">Fenação</div>
+                            <div style="text-align: center; padding: 12px 8px; background: rgba(26, 71, 42, 0.3); border: 1px solid rgba(46, 139, 87, 0.3); border-radius: 8px;">
+                                <div style="font-size: 1.8rem; margin-bottom: 8px;">📦</div>
+                                <div style="font-size: 0.85rem; font-weight: 600;">Fenação</div>
                             </div>
                         </div>
                     </div>
@@ -727,17 +842,21 @@
                 <div class="content-right">
                     <div class="image-container">
                         <img src="bovinos-pastagem.jpg" alt="Bovinos em pastagem de capim maradum">
-                        <div class="image-placeholder" style="display: none;">[Imagem: Bovinos em pastagem]</div>
+                        <div class="image-placeholder" style="display: none;">Bovinos em Pastagem</div>
                     </div>
                     
-                    <div class="content-block">
+                    <div class="content-block scroll-container">
                         <h3><i class="fas fa-thermometer-half"></i> Tipo de Forrageira</h3>
-                        <div class="forrage-type" style="display: flex; gap: 10px; margin-bottom: 12px; flex-wrap: wrap;">
-                            <div class="type-badge tropical">Forrageira Tropical</div>
-                            <div class="type-badge c4">Planta C4</div>
+                        <div style="display: flex; gap: 10px; margin: 12px 0; flex-wrap: wrap;">
+                            <div style="padding: 8px 15px; border-radius: 20px; font-weight: 700; font-size: 0.85rem; background: linear-gradient(135deg, #ff6b6b, #ee5a52); color: white;">
+                                Forrageira Tropical
+                            </div>
+                            <div style="padding: 8px 15px; border-radius: 20px; font-weight: 700; font-size: 0.85rem; background: linear-gradient(135deg, #4ecdc4, #44a08d); color: white;">
+                                Planta C4
+                            </div>
                         </div>
                         <div class="c4-benefits">
-                            <h4 style="font-size: 0.9rem; margin-bottom: 6px;">Vantagens do Metabolismo C4:</h4>
+                            <h4 style="font-size: 0.95rem; margin-bottom: 10px; color: var(--accent);">Vantagens do Metabolismo C4:</h4>
                             <ul class="bullet-list">
                                 <li>Alta eficiência fotossintética</li>
                                 <li>Ótima performance em altas temperaturas</li>
@@ -764,9 +883,9 @@
                 <div class="content-left">
                     <div class="content-block">
                         <h3><i class="fas fa-calendar-alt"></i> Ciclo de Vida</h3>
-                        <div class="lifecycle-badge" style="display: flex; align-items: center; gap: 12px; padding: 15px; background: linear-gradient(135deg, #9b59b6, #8e44ad); color: white; border-radius: 10px; text-align: center;">
-                            <div class="lifecycle-icon" style="font-size: 2rem;">♾️</div>
-                            <div class="lifecycle-text" style="font-size: 1rem; line-height: 1.2;">
+                        <div style="display: flex; align-items: center; gap: 15px; padding: 15px; background: linear-gradient(135deg, rgba(155, 89, 182, 0.3), rgba(142, 68, 173, 0.3)); color: white; border-radius: 12px; text-align: center; border: 1px solid rgba(155, 89, 182, 0.5);">
+                            <div style="font-size: 2.2rem;">♾️</div>
+                            <div style="font-size: 1rem; line-height: 1.3;">
                                 <strong>PERENE</strong><br>
                                 Mais de 2 anos de vida útil
                             </div>
@@ -775,35 +894,41 @@
                     
                     <div class="content-block scroll-container">
                         <h3><i class="fas fa-ruler-vertical"></i> Alturas de Manejo</h3>
-                        <div class="management-table">
-                            <div class="management-row header">
-                                <div>Tipo de Manejo</div>
-                                <div>Altura</div>
-                                <div>Objetivo</div>
+                        <div style="margin-top: 12px;">
+                            <div style="display: grid; grid-template-columns: 2fr 1fr 2fr; gap: 10px; padding: 10px 12px; align-items: center; border-bottom: 1px solid rgba(255, 255, 255, 0.1); font-size: 0.85rem;">
+                                <div style="font-weight: 600;">Tipo de Manejo</div>
+                                <div style="font-weight: 600; text-align: center;">Altura</div>
+                                <div style="font-weight: 600;">Objetivo</div>
                             </div>
-                            <div class="management-row">
-                                <div class="mgmt-type" style="display: flex; align-items: center; gap: 5px;">
-                                    <i class="fas fa-sign-in-alt"></i>
+                            <div style="display: grid; grid-template-columns: 2fr 1fr 2fr; gap: 10px; padding: 10px 12px; align-items: center; border-bottom: 1px solid rgba(255, 255, 255, 0.1); font-size: 0.85rem;">
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <i class="fas fa-sign-in-alt" style="color: var(--secondary); font-size: 0.9rem;"></i>
                                     Entrada do Gado
                                 </div>
-                                <div class="mgmt-height highlight">25-30 cm</div>
-                                <div class="mgmt-purpose">Máxima qualidade</div>
+                                <div style="background: var(--secondary); color: white; padding: 5px 10px; border-radius: 15px; text-align: center; font-weight: 700; font-size: 0.8rem;">
+                                    25-30 cm
+                                </div>
+                                <div>Máxima qualidade</div>
                             </div>
-                            <div class="management-row">
-                                <div class="mgmt-type" style="display: flex; align-items: center; gap: 5px;">
-                                    <i class="fas fa-sign-out-alt"></i>
+                            <div style="display: grid; grid-template-columns: 2fr 1fr 2fr; gap: 10px; padding: 10px 12px; align-items: center; border-bottom: 1px solid rgba(255, 255, 255, 0.1); font-size: 0.85rem;">
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <i class="fas fa-sign-out-alt" style="color: var(--secondary); font-size: 0.9rem;"></i>
                                     Saída do Gado
                                 </div>
-                                <div class="mgmt-height highlight">15-20 cm</div>
-                                <div class="mgmt-purpose">Preservar rebrota</div>
+                                <div style="background: var(--secondary); color: white; padding: 5px 10px; border-radius: 15px; text-align: center; font-weight: 700; font-size: 0.8rem;">
+                                    15-20 cm
+                                </div>
+                                <div>Preservar rebrota</div>
                             </div>
-                            <div class="management-row">
-                                <div class="mgmt-type" style="display: flex; align-items: center; gap: 5px;">
-                                    <i class="fas fa-cut"></i>
+                            <div style="display: grid; grid-template-columns: 2fr 1fr 2fr; gap: 10px; padding: 10px 12px; align-items: center; font-size: 0.85rem;">
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <i class="fas fa-cut" style="color: var(--secondary); font-size: 0.9rem;"></i>
                                     Corte para Feno
                                 </div>
-                                <div class="mgmt-height highlight">90 cm</div>
-                                <div class="mgmt-purpose">Volume e qualidade</div>
+                                <div style="background: var(--secondary); color: white; padding: 5px 10px; border-radius: 15px; text-align: center; font-weight: 700; font-size: 0.8rem;">
+                                    90 cm
+                                </div>
+                                <div>Volume e qualidade</div>
                             </div>
                         </div>
                     </div>
@@ -812,7 +937,7 @@
                 <div class="content-right">
                     <div class="image-container">
                         <img src="manejo-pastagem.jpg" alt="Manejo de pastagem de capim maradum">
-                        <div class="image-placeholder" style="display: none;">[Imagem: Manejo de pastagem]</div>
+                        <div class="image-placeholder" style="display: none;">Manejo de Pastagem</div>
                     </div>
                     
                     <div class="content-block scroll-container">
@@ -829,7 +954,7 @@
             </div>
         </div>
         
-        <!-- Slide 5: Características - AJUSTADO PARA CABER TUDO -->
+        <!-- Slide 5: Características -->
         <div class="slide" id="slide-5">
             <div class="slide-header">
                 <h1 class="slide-title">Principais Características</h1>
@@ -843,36 +968,26 @@
                 <div class="content-left">
                     <div class="content-block scroll-container">
                         <h3><i class="fas fa-star"></i> Características Destacadas</h3>
-                        <div class="characteristics-grid">
-                            <div class="char-card">
-                                <div class="char-icon">🛡️</div>
-                                <div class="char-title">Resistência</div>
-                                <div class="char-desc">Cigarrinhas-das-pastagens</div>
+                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin: 12px 0;">
+                            <div style="text-align: center; padding: 15px 10px; background: rgba(26, 71, 42, 0.3); border-radius: 10px; border: 1px solid rgba(46, 139, 87, 0.3);">
+                                <div style="font-size: 1.8rem; margin-bottom: 8px;">🛡️</div>
+                                <div style="font-weight: 700; color: var(--accent); margin-bottom: 5px; font-size: 0.9rem;">Resistência</div>
+                                <div style="font-size: 0.8rem; color: rgba(255, 255, 255, 0.8);">Cigarrinhas-das-pastagens</div>
                             </div>
-                            <div class="char-card">
-                                <div class="char-icon">📈</div>
-                                <div class="char-title">Produção</div>
-                                <div class="char-desc">Alta produtividade</div>
+                            <div style="text-align: center; padding: 15px 10px; background: rgba(26, 71, 42, 0.3); border-radius: 10px; border: 1px solid rgba(46, 139, 87, 0.3);">
+                                <div style="font-size: 1.8rem; margin-bottom: 8px;">📈</div>
+                                <div style="font-weight: 700; color: var(--accent); margin-bottom: 5px; font-size: 0.9rem;">Produção</div>
+                                <div style="font-size: 0.8rem; color: rgba(255, 255, 255, 0.8);">Alta produtividade</div>
                             </div>
-                            <div class="char-card">
-                                <div class="char-icon">🔄</div>
-                                <div class="char-title">Rebrota</div>
-                                <div class="char-desc">Recuperação rápida</div>
+                            <div style="text-align: center; padding: 15px 10px; background: rgba(26, 71, 42, 0.3); border-radius: 10px; border: 1px solid rgba(46, 139, 87, 0.3);">
+                                <div style="font-size: 1.8rem; margin-bottom: 8px;">🔄</div>
+                                <div style="font-weight: 700; color: var(--accent); margin-bottom: 5px; font-size: 0.9rem;">Rebrota</div>
+                                <div style="font-size: 0.8rem; color: rgba(255, 255, 255, 0.8);">Recuperação rápida</div>
                             </div>
-                            <div class="char-card">
-                                <div class="char-icon">🌱</div>
-                                <div class="char-title">Solo</div>
-                                <div class="char-desc">Melhora estrutura</div>
-                            </div>
-                            <div class="char-card">
-                                <div class="char-icon">🍃</div>
-                                <div class="char-title">Morfologia</div>
-                                <div class="char-desc">Folhas lanceoladas</div>
-                            </div>
-                            <div class="char-card">
-                                <div class="char-icon">🌡️</div>
-                                <div class="char-title">Adaptação</div>
-                                <div class="char-desc">Clima tropical</div>
+                            <div style="text-align: center; padding: 15px 10px; background: rgba(26, 71, 42, 0.3); border-radius: 10px; border: 1px solid rgba(46, 139, 87, 0.3);">
+                                <div style="font-size: 1.8rem; margin-bottom: 8px;">🌱</div>
+                                <div style="font-weight: 700; color: var(--accent); margin-bottom: 5px; font-size: 0.9rem;">Solo</div>
+                                <div style="font-size: 0.8rem; color: rgba(255, 255, 255, 0.8);">Melhora estrutura</div>
                             </div>
                         </div>
                     </div>
@@ -881,19 +996,19 @@
                 <div class="content-right">
                     <div class="image-container">
                         <img src="sementes-maradum.jpg" alt="Sementes de capim maradum">
-                        <div class="image-placeholder" style="display: none;">[Imagem: Sementes de capim maradum]</div>
+                        <div class="image-placeholder" style="display: none;">Sementes de Capim Maradum</div>
                     </div>
                     
                     <div class="content-block">
                         <h3><i class="fas fa-check-circle"></i> Conclusão</h3>
-                        <div class="conclusion-block">
+                        <div style="background: linear-gradient(135deg, var(--secondary), var(--primary)); color: white; padding: 15px; border-radius: 10px; margin-bottom: 12px; font-size: 0.9rem; line-height: 1.4; text-align: justify;">
                             O capim Maradum (<em>Brachiaria brizantha</em>) é uma forrageira de 
                             <strong>fundamental importância</strong> para a pecuária tropical brasileira, 
                             destacando-se por sua alta produtividade, adaptabilidade e valor nutricional.
                         </div>
                     </div>
                     
-                    <div class="content-block">
+                    <div class="content-block scroll-container">
                         <h3><i class="fas fa-users"></i> Equipe</h3>
                         <ul class="bullet-list">
                             <li>Renan - Introdução</li>
@@ -929,7 +1044,7 @@
             <div class="nav-dot" data-slide="5"></div>
         </div>
         
-        <!-- Informações da equipe (AGORA COM TODOS OS 5 NOMES) -->
+        <!-- Informações da equipe -->
         <div class="team-info">
             Equipe: Renan, Junior, Givanildo, João, Kaio
         </div>
@@ -943,11 +1058,15 @@
             const nextBtn = document.getElementById('next-slide');
             const currentSlideEl = document.getElementById('current-slide');
             const totalSlidesEl = document.getElementById('total-slides');
+            const progressBar = document.getElementById('progress-bar');
             
             let currentSlide = 0;
             const totalSlides = slides.length;
             
             totalSlidesEl.textContent = totalSlides;
+            
+            // Criar partículas de fundo
+            createParticles();
             
             function showSlide(index) {
                 slides.forEach(slide => slide.classList.remove('active'));
@@ -959,17 +1078,24 @@
                 currentSlide = index;
                 currentSlideEl.textContent = index + 1;
                 
-                // Ajustar transparência dos botões conforme a posição
+                // Atualizar a barra de progresso
+                progressBar.style.width = `${((index + 1) / totalSlides) * 100}%`;
+                
+                // Ajustar opacidade dos botões conforme a posição
                 if (index === 0) {
                     prevBtn.style.opacity = "0.5";
+                    prevBtn.style.cursor = "not-allowed";
                 } else {
-                    prevBtn.style.opacity = "0.7";
+                    prevBtn.style.opacity = "1";
+                    prevBtn.style.cursor = "pointer";
                 }
                 
                 if (index === totalSlides - 1) {
                     nextBtn.style.opacity = "0.5";
+                    nextBtn.style.cursor = "not-allowed";
                 } else {
-                    nextBtn.style.opacity = "0.7";
+                    nextBtn.style.opacity = "1";
+                    nextBtn.style.cursor = "pointer";
                 }
             }
             
@@ -999,7 +1125,36 @@
                 }
             });
             
-            // Initialize
+            // Função para criar partículas de fundo
+            function createParticles() {
+                const particlesContainer = document.getElementById('particles');
+                const particleCount = 30;
+                
+                for (let i = 0; i < particleCount; i++) {
+                    const particle = document.createElement('div');
+                    particle.classList.add('particle');
+                    
+                    // Tamanho aleatório
+                    const size = Math.random() * 15 + 5;
+                    particle.style.width = `${size}px`;
+                    particle.style.height = `${size}px`;
+                    
+                    // Posição aleatória
+                    particle.style.left = `${Math.random() * 100}%`;
+                    particle.style.top = `${Math.random() * 100 + 100}%`;
+                    
+                    // Atraso e duração da animação
+                    particle.style.animationDelay = `${Math.random() * 10}s`;
+                    particle.style.animationDuration = `${Math.random() * 20 + 10}s`;
+                    
+                    // Opacidade aleatória
+                    particle.style.opacity = Math.random() * 0.5 + 0.1;
+                    
+                    particlesContainer.appendChild(particle);
+                }
+            }
+            
+            // Inicializar
             showSlide(0);
         });
     </script>
